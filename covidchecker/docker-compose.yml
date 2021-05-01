@@ -4,7 +4,7 @@ services:
         image: mongo
         container_name: mongodb
         volumes:
-        - /home/ubuntu/deployment_files/covidchecker/mongo_data/:/data/db
+        - /home/ubuntu/deployment-files/covidchecker/mongo_data/:/data/db
         ports:
         - 27017:27017
         healthcheck:
