@@ -1,9 +1,10 @@
 version: "3.8"
 services:
-    db: 
-        image: mongo      
+    mongodb: 
+        image: mongo
+        container_name: mongodb
         volumes:
-        - /c/Users/Joshua/Documents/mongodb_bind_mount/:/data/db
+        - /home/ubuntu/deployment_files/covidchecker/mongo_data/:/data/db
         ports:
         - 27017:27017
         healthcheck:
@@ -15,8 +16,9 @@ services:
         restart: unless-stopped
     covidchecker: 
         image: covidchecker
+        container_name: covidchecker_microservice
         ports:
         - 8080:8080
         depends_on:
-            db: 
+            mongodb: 
                 condition: service_healthy
