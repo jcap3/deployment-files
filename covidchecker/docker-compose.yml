@@ -5,8 +5,6 @@ services:
         container_name: mongodb
         volumes:
         - /home/ubuntu/deployment-files/covidchecker/mongo_data/:/data/db
-        ports:
-        - 27017:27017
         healthcheck:
             test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/covidCheckerDb --quiet
             interval: 10s
@@ -17,8 +15,13 @@ services:
     covidchecker: 
         image: covidchecker
         container_name: covidchecker_microservice
-        ports:
-        - 8080:8080
         depends_on:
             mongodb: 
                 condition: service_healthy
+    covidchecker_frontend:
+        image: covidcheckerfrontend
+        container_name: covidchecker_frontend
+        depends_on:
+            - covidchecker
+        ports:
+        - 80:80
