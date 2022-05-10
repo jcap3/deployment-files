@@ -1,18 +1,12 @@
 version: "3.8"
 services:
-    mongodb: 
-        image: mongo
-        container_name: mongodb
+    mysql: 
+        image: mysql
+        container_name: mysql
         volumes:
-        - /home/ubuntu/deployment-files/transaction-reconciliator/mongo_data/:/data/db
+        - /home/ubuntu/deployment-files/transaction-reconciliator/mysql_data/:/var/lib/mysql
         ports:
-        - 27017:27017
-        healthcheck:
-            test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/transactionReconciliatorDb --quiet
-            interval: 10s
-            timeout: 10s
-            retries: 5
-            start_period: 20s
+        - 3306:3306
         restart: unless-stopped
     transaction-reconciliator: 
         image: transaction-reconciliator
@@ -20,5 +14,5 @@ services:
         ports:
         - 8080:8080
         depends_on:
-            mongodb: 
+            mysql: 
                 condition: service_healthy
