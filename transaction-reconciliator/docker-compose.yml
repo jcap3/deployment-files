@@ -1,4 +1,4 @@
-version: "3.8"
+version: "2.1"
 services:
     mysql: 
         image: mysql
@@ -10,6 +10,10 @@ services:
         ports:
         - 3306:3306
         restart: unless-stopped
+        healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+            timeout: 20s
+            retries: 10
     transaction-reconciliator: 
         image: transaction-reconciliator
         container_name: transaction-reconciliator_microservice
