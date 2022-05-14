@@ -5,8 +5,6 @@ services:
         container_name: mysql
         environment:
             MYSQL_ROOT_PASSWORD: 'my-secret-pw'
-            MYSQL_USER: 'user'
-            MYSQL_PASSWORD: 'password'
         volumes:
         - /home/ubuntu/deployment-files/transaction-reconciliator/mysql_data/:/var/lib/mysql
         ports:
@@ -24,3 +22,8 @@ services:
         depends_on:
             mysql: 
                 condition: service_healthy
+    transaction-reconciliator-frontend:
+        image: transaction-reconciliator-frontend
+        container_name: transaction-reconciliator-frontend
+        ports: 
+        - 3000:3000
