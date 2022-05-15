@@ -19,6 +19,7 @@ services:
         container_name: transaction-reconciliator_microservice
         ports:
         - 8080:8080
+        restart: unless-stopped  
         depends_on:
             mysql: 
                 condition: service_healthy
@@ -27,3 +28,4 @@ services:
         container_name: transaction-reconciliator-frontend
         ports: 
         - 3000:3000
+        restart: unless-stopped
